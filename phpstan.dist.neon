@@ -1,0 +1,10 @@
+parameters:
+	level: 6
+	paths:
+		- src
+	scanDirectories:
+		- tests/wordpress
+		- tests/woocommerce
+		- tests/stubs
+	earlyTerminatingFunctionCalls:
+		- wp_die

@@ -1,0 +1,84 @@
+version: "3.0"
+
+services:
+  db:
+    image: mariadb:10.4.10-bionic
+    restart: always
+    ports:
+      # You can connect to the site database from the terminal with:
+      #   mysql -u root -p -h 127.0.0.1 -P 4406
+      - "4406:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+
+  db-tests:
+    image: mariadb:10.4.10-bionic
+    restart: always
+    ports:
+      # You can connect to the site database from the terminal with:
+      #   mysql -u root -p -h 127.0.0.1 -P 4407
+      - "4407:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress_test
+
+  php-myadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - db
+      - db-tests
+    ports:
+      # Visit php-myadmin UI at: http://localhost:8082
+      - "8082:80"
+
+  wp:
+    image: wordpress:php8.1-apache
+    ports:
+      # Visit WordPress installation at: http://localhost:8081
+      - "8081:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+      - db-tests
+    volumes:
+      - wp_intall_root:/var/www/html
+      - .:/var/www/html/wp-content/plugins/asynchronous-template-data
+      - ./tests/client-mu-plugin:/var/www/html/wp-content/mu-plugins
+
+  wpcli:
+    depends_on:
+      - wp
+      - db
+    image: wordpress:cli-php8.1
+    user: xfs
+    command: >
+      /bin/bash -c '
+      sleep 20;
+      wp db reset --yes;
+      wp core install --path="/var/www/html" --url="http://localhost:8081" --title="Local Wordpress By Docker" --admin_user=admin --admin_password=password --admin_email=admin@wordpress.test;
+      wp plugin install woocommerce;
+      wp plugin activate woocommerce;
+      wp db export wp-content/plugins/asynchronous-template-data/tests/_data/dump.sql;
+      '
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_intall_root:/var/www/html
+      - .:/var/www/html/wp-content/plugins/asynchronous-template-data
+      - ./tests/client-mu-plugin:/var/www/html/wp-content/mu-plugins
+volumes:
+  db_data:
+  wp_intall_root:

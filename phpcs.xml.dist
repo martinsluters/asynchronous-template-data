@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ruleset name="Asynchronous Template Data Ruleset">
+
+    <arg name="extensions" value="php" />
+    <arg name="colors" />
+    <arg value="s" /><!-- Show sniff codes in all reports. -->
+    <arg value="n" /><!-- Do not show warnings. -->
+
+    <rule ref="PHPCompatibility"/>
+    <config name="testVersion" value="8.1-"/>
+
+    <config name="text_domain" value="asynchronous-template-data"/>
+    <config name="prefixes" value="ml_asynchronous_template_data"/>
+    <config name="minimum_supported_wp_version" value="4"/>
+
+    <rule ref="WordPress-Extra">
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+        <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound" />
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain" />
+        <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain" />
+	</rule>
+
+    <rule ref="NeutronStandard"/>
+
+    <rule ref="WordPress-Docs">
+        <exclude name="Squiz.Commenting.FileComment" />
+    </rule>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>/tests/wordpress</exclude-pattern>
+    <exclude-pattern>/tests/woocommerce</exclude-pattern>
+    <exclude-pattern>/tests/_*</exclude-pattern>
+</ruleset>

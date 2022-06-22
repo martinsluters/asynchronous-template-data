@@ -1,0 +1,22 @@
+.DS_Store
+todo.todo
+*.cache
+
+# Environment
+/tests/.env.testing
+
+# PHP
+/vendor
+/tests/wordpress
+/tests/woocommerce
+
+# Parcel, npm and js
+.parcel-cache/
+ui/dist/*
+node_modules/
+
+# Codeception
+codeception.yml
+
+# PHPStan
+phpstan.neon

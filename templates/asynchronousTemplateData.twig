@@ -1,0 +1,7 @@
+<span
+    x-data="{ template_data: dii.loading_text }"
+    x-init="template_data = await fetchData('{{argument}}', dii.ajax_url, dii.action_name, dii.nonce_request_parameter_name, dii.nonce, dii.default_fail_text)"
+    class="{{ css_class|join(' ') }}"
+    x-html="template_data">
+    {{ information|raw }}
+</span>

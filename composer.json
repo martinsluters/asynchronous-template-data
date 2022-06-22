@@ -1,0 +1,122 @@
+{
+    "name": "martinsluters/asynchronous-template-data",
+    "type": "wordpress-plugin",
+    "version": "0.1",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Martins Luters",
+            "email": "luters.martins@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
+    "require": {
+        "php": "^8.1",
+        "twig/twig": "^3.3",
+        "cuyz/valinor": "^0.9.0",
+        "symfony/http-foundation": "^6.1"
+    },
+    "require-dev": {
+        "automattic/phpcs-neutron-standard": "^1.7",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "wp-coding-standards/wpcs": "^2.3",
+        "roots/wordpress": "^6.0",
+        "vlucas/phpdotenv": "^5.4",
+        "lucatume/wp-browser": "^3.1",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-phpbrowser": "^1.0",
+        "codeception/module-webdriver": "^1.0",
+        "codeception/module-db": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-cli": "^1.0",
+        "codeception/util-universalframework": "^1.0",
+        "10up/wp_mock": "^0.4.2",
+        "johnbillion/falsey-assertequals-detector": "^3.2",
+        "phpstan/phpstan": "^1.7",
+        "wpackagist-plugin/woocommerce":"*",
+        "friendsofphp/php-cs-fixer": "^3.8"
+    },
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/woocommerce"
+            ]
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "martinsluters\\AsynchronousTemplateData\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "martinsluters\\AsynchronousTemplateData\\Tests\\Unit\\": "tests/unit/",
+            "martinsluters\\AsynchronousTemplateData\\Tests\\Acceptance\\": "tests/acceptance/"
+        },
+        "files": ["tests/DummyDeliveryInformationProvider.php"]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "roots/wordpress-core-installer": true,
+            "composer/installers": true
+        }
+    },
+    "extra": {
+        "wordpress-install-dir": "tests/wordpress",
+        "installer-paths": {
+          "tests/{$name}/": [
+              "wpackagist-plugin/woocommerce"
+          ]
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@copy:env",
+            "@npm:install",
+            "@npm:build"
+        ],
+        "post-update-cmd": [
+            "@copy:env",
+            "@npm:install",
+            "@npm:build"
+        ],
+
+        "optimize": [
+          "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php"
+        ],
+
+        "test": [
+          "@test:ut",
+          "@test:wput",
+          "@test:act",
+          "@test:cs",
+          "@test:phpstan"
+        ],
+
+        "test:wput": "vendor/bin/codecept run wpunit",
+        "test:ut": "vendor/bin/codecept run unit",
+        "test:act": "vendor/bin/codecept run acceptance --debug",
+        "test:cs": "vendor/bin/phpcs -nps --colors --report-code --report-summary --report-width=80 .",
+        "test:phpstan": "vendor/bin/phpstan analyse",
+        "test:jest": "npm run test",
+
+        "selenium:install": "npx selenium-standalone install",
+        "selenium:start": "npx selenium-standalone start -port 4444",
+        "selenium:stop": "kill -9 $(lsof -ti tcp:4444)",
+
+        "npm:install": "npm install",
+        "npm:build": "npm run build",
+
+        "copy:env": [
+          "php -r \"file_exists('tests/.env.testing') || copy('tests/.env.testing.dist', 'tests/.env.testing');\""
+        ],
+
+        "containerup": "docker-compose up -d",
+        "containerdown": "docker-compose down"
+    }
+}

@@ -1,0 +1,77 @@
+name: Test & Lint
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        php-versions: ['8.1']
+        wp: ['5.8', '5.9', '6.0']
+      fail-fast: false
+    runs-on: ubuntu-latest
+    name: PHP:${{ matrix.php-versions }} / WP:${{ matrix.wp }}
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Build the stack (test databases)
+      run: docker-compose up -d
+
+    - name: Install PHP
+      uses: shivammathur/setup-php@2.19.1
+      with:
+        php-version: ${{ matrix.php-versions }}
+
+    - name: Install WordPress
+      run: composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="~${{ matrix.wp }}.0"
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Install Dependencies
+      run: |
+        composer install
+
+    - name: Build Static Resources
+      run: |
+        npm run build
+
+    - name: Debugging
+      run: |
+        composer --version
+        composer show roots/wordpress
+        php --version
+        php -m
+        node -v
+
+    - name: Run PHP Unit Tests
+      run: composer test:ut
+
+    - name: Run PHP WP Unit (Acceptance) Tests
+      run: composer test:wput
+
+    - name: Run (QA1) PHP Static Analysis
+      run: composer test:phpstan
+
+    - name: Run (QA2) PHP Code Sniffer
+      run: composer test:cs
+
+    - name: Run JS Unit Tests
+      run: composer test:jest

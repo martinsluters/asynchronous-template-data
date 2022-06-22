@@ -1,0 +1,51 @@
+{
+  "name": "asynchronous-template-data",
+  "version": "0.1",
+  "description": "",
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ],
+  "babel": {
+    "presets": [
+      "@wordpress/babel-preset-default"
+    ]
+  },
+  "source": "ui/main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest",
+    "cleanup": "rimraf .parcel-cache ui/dist",
+    "watch": "npm run cleanup && parcel watch --dist-dir ui/dist  --no-source-maps --no-cache",
+    "build": "npm run cleanup && parcel build --dist-dir ui/dist --no-cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martinsluters/asynchronous-template-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martinsluters/asynchronous-template-data/issues"
+  },
+  "homepage": "https://github.com/martinsluters/asynchronous-template-data#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@wordpress/babel-preset-default": "^6.10.0",
+    "@wordpress/browserslist-config": "^4.1.2",
+    "@wordpress/eslint-plugin": "^12.3.0",
+    "browserslist": "^4.20.3",
+    "buffer": "^6.0.3",
+    "eslint": "^8.16.0",
+    "jest": "^28.1.0",
+    "parcel": "^2.5.0",
+    "process": "^0.11.10",
+    "selenium-standalone": "^8.1.4"
+  },
+  "dependencies": {
+    "@wordpress/hooks": "^3.9.0",
+    "alpinejs": "^3.10.2",
+    "axios": "^0.27.2"
+  }
+}
