@@ -26,13 +26,14 @@ jobs:
     - name: Build the stack (test databases)
       run: docker-compose up -d
 
+    - name: Sleep for databases to spin up for 30 seconds.
+      run: sleep 30s
+      shell: bash
+
     - name: Install PHP
       uses: shivammathur/setup-php@2.19.1
       with:
         php-version: ${{ matrix.php-versions }}
-
-    - name: Install WordPress
-      run: composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="~${{ matrix.wp }}.0"
 
     - name: Get Composer Cache Directory
       id: composer-cache
@@ -48,6 +49,9 @@ jobs:
     - name: Install Dependencies
       run: |
         composer install
+
+    - name: Install WordPress
+      run: composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="~${{ matrix.wp }}.0"
 
     - name: Build Static Resources
       run: |
