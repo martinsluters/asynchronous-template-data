@@ -15,6 +15,7 @@ use martinsluters\AsynchronousTemplateData\Requests\RequestDataValidationAjaxStr
 use martinsluters\AsynchronousTemplateData\Arguments\LookupArgumentFactory;
 use martinsluters\AsynchronousTemplateData\ContentController;
 use martinsluters\AsynchronousTemplateData\TemplateRenderer;
+use martinsluters\AsynchronousTemplateData\PluginDataTrait;
 use martinsluters\AsynchronousTemplateData\PluginData;
 use martinsluters\AsynchronousTemplateData\Twig;
 
@@ -22,6 +23,8 @@ use martinsluters\AsynchronousTemplateData\Twig;
  * Bootstrap plugin.
  */
 final class Bootstrap {
+
+	use PluginDataTrait;
 
 	/**
 	 * Stores one and only true instance of Bootstrap
@@ -36,13 +39,6 @@ final class Bootstrap {
 	 * @var EventManager
 	 */
 	private EventManager $event_manager;
-
-	/**
-	 * Plugin data instance
-	 *
-	 * @var \martinsluters\AsynchronousTemplateData\PluginData
-	 */
-	private PluginData $plugin_data;
 
 	/**
 	 * Ajax request/action handler.
@@ -163,17 +159,17 @@ final class Bootstrap {
 	 * @todo Use container.
 	 */
 	public function init(): void {
-		$this->plugin_data = new PluginData();
-		$this->template_rendering_engine = ( new Twig( $this->plugin_data ) )->init();
+		$this->setPluginData( new PluginData() );
+		$this->template_rendering_engine = ( new Twig( $this->getPluginData() ) )->init();
 
 		$this->request_data = new RequestData(
-			$this->plugin_data,
+			$this->getPluginData(),
 			Request::createFromGlobals(),
 			new RequestDataValidationAjaxStrategy()
 		);
 
 		$this->template_renderer = new TemplateRenderer(
-			$this->plugin_data,
+			$this->getPluginData(),
 			$this->template_rendering_engine
 		);
 
@@ -181,14 +177,14 @@ final class Bootstrap {
 
 		$this->content_controller = new ContentController(
 			$this->template_renderer,
-			$this->plugin_data,
+			$this->getPluginData(),
 			$this->request_data,
 			new LookupArgumentFactory(),
 			$this->provider_manager
 		);
 
-		$this->ajax_handler = new AjaxHandler( $this->plugin_data, $this->content_controller );
-		$this->static_dependencies = new StaticDependencies( $this->plugin_data );
+		$this->ajax_handler = new AjaxHandler( $this->getPluginData(), $this->content_controller );
+		$this->static_dependencies = new StaticDependencies( $this->getPluginData() );
 
 		$this->manageEventSubscribers();
 	}
