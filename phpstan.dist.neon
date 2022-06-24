@@ -1,7 +1,7 @@
 parameters:
 	level: 6
 	paths:
-		- src
+		- src/
 	bootstrapFiles:
 		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
 	stubFiles:
