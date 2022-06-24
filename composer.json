@@ -35,18 +35,11 @@
         "10up/wp_mock": "^0.4.2",
         "johnbillion/falsey-assertequals-detector": "^3.2",
         "phpstan/phpstan": "^1.7",
-        "wpackagist-plugin/woocommerce":"*",
-        "friendsofphp/php-cs-fixer": "^3.8"
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "szepeviktor/phpstan-wordpress": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "php-stubs/woocommerce-stubs": "^6.6"
     },
-    "repositories":[
-        {
-            "type":"composer",
-            "url":"https://wpackagist.org",
-            "only": [
-                "wpackagist-plugin/woocommerce"
-            ]
-        }
-    ],
     "autoload": {
         "psr-4": {
             "martinsluters\\AsynchronousTemplateData\\": "src/"
@@ -63,16 +56,12 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "roots/wordpress-core-installer": true,
-            "composer/installers": true
+            "composer/installers": true,
+            "phpstan/extension-installer": true
         }
     },
     "extra": {
-        "wordpress-install-dir": "tests/wordpress",
-        "installer-paths": {
-          "tests/{$name}/": [
-              "wpackagist-plugin/woocommerce"
-          ]
-        }
+        "wordpress-install-dir": "tests/wordpress"
     },
     "scripts": {
         "post-install-cmd": [
