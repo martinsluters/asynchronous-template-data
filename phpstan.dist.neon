@@ -4,5 +4,4 @@ parameters:
 		- src/
 	bootstrapFiles:
 		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
-	stubFiles:
 		- tests/stubs/YITHDeliveryDateProductFrontend.stub
