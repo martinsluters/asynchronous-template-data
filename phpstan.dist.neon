@@ -3,6 +3,6 @@ parameters:
 	paths:
 		- src
 	bootstrapFiles:
-		- %rootDir%/../../php-stubs/woocommerce-stubs/woocommerce-stubs.php
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
 	scanDirectories:
 		- tests/stubs
