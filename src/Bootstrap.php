@@ -190,6 +190,25 @@ final class Bootstrap {
 	}
 
 	/**
+	 * Getter of provider manager.
+	 *
+	 * @return \martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager
+	 * @throws \Exception Is thrown if getProviderManager is called before plugin is initialized.
+	 */
+	public function getProviderManager(): ProviderManager {
+		try {
+			/**
+			 * Return provider_manager property.
+			 *
+			 * @throws \Error if accessed before initialized
+			 */
+			return $this->provider_manager;
+		} catch ( \Error $th ) {
+			throw new \Exception( 'Provider manager can\'t be accessed before Bootstrap::init is called.' );
+		}
+	}
+
+	/**
 	 * Getter of content controller.
 	 *
 	 * @return ContentController

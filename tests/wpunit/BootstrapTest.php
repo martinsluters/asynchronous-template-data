@@ -5,6 +5,7 @@ namespace martinsluters\AsynchronousTemplateData\Tests\Wpunit;
 
 use martinsluters\AsynchronousTemplateData\Bootstrap;
 use martinsluters\AsynchronousTemplateData\ContentController;
+use martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager;
 
 /**
  * Tests Related to Bootstrap class
@@ -59,5 +60,26 @@ class BootstrapTest extends \Codeception\TestCase\WPTestCase {
 	public function testGetContentControllerMustThrowException(): void {
 		$this->expectException( \Exception::class );
 		$this->bootstrap_sut->getContentController();
+	}
+
+	/**
+	 * Make sure that getter of provider_manager returns instance of Provider Manager.
+	 *
+	 * @return void
+	 */
+	public function testGetProviderManagerShouldReturnProviderManagerInstance() {
+		$this->bootstrap_sut->init();
+		$this->assertInstanceOf( ProviderManager::class, $this->bootstrap_sut->getProviderManager() );
+	}
+
+	/**
+	 * Make sure that getter of provider_manager throws exception if
+	 * Provider Manager property is not initialized yet.
+	 *
+	 * @return void
+	 */
+	public function testGetProviderManagerMustThrowException(): void {
+		$this->expectException( \Exception::class );
+		$this->bootstrap_sut->getProviderManager();
 	}
 }
