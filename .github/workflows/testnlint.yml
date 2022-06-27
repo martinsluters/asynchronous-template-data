@@ -64,6 +64,7 @@ jobs:
         php --version
         php -m
         node -v
+        npm -v
 
     - name: Run PHP Unit Tests
       run: composer test:ut
