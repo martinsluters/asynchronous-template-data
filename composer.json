@@ -91,7 +91,7 @@
         "test:ut": "vendor/bin/codecept run unit",
         "test:act": "vendor/bin/codecept run acceptance --debug",
         "test:cs": "vendor/bin/phpcs -nps --colors --report-code --report-summary --report-width=80 .",
-        "test:phpstan": "vendor/bin/phpstan analyse --memory-limit=256M",
+        "test:phpstan": "vendor/bin/phpstan analyse --memory-limit=1G",
         "test:jest": "npm run test",
 
         "selenium:install": "npx selenium-standalone install",
