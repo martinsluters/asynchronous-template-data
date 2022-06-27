@@ -60,7 +60,7 @@ jobs:
     - name: Debugging
       run: |
         composer --version
-        composer show roots/wordpress
+        composer show roots/wordpress-full
         php --version
         php -m
         node -v
