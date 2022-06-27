@@ -25,7 +25,7 @@ trait ProviderManagerTrait {
 			/**
 			 * Return provider_manager property.
 			 *
-			 * @throws \Error if accessed before initialized
+			 * @throws \Error if accessed before initialized.
 			 */
 			return $this->provider_manager;
 		} catch ( \Error $th ) {
@@ -36,7 +36,7 @@ trait ProviderManagerTrait {
 	/**
 	 * Setter of provider manager.
 	 *
-	 * @param \martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager $provider_manager
+	 * @param \martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager $provider_manager Provider Manager instance.
 	 * @return void
 	 */
 	protected function setProviderManager( ProviderManager $provider_manager ): void {

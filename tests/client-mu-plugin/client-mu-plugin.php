@@ -50,8 +50,8 @@ class Plugin {
 	 * @return void
 	 */
 	public static function addDeliveryInformationProvider(): void {
-		self::$delivery_information_plugin->provider_manager->addProvider( self::PROVIDER_1_KEY, new DummyDeliveryInformationProvider() );
-		self::$delivery_information_plugin->provider_manager->addProvider( self::PROVIDER_2_KEY, new DummyDeliveryInformationProvider() );
+		self::$delivery_information_plugin->getProviderManager()->addProvider( self::PROVIDER_1_KEY, new DummyDeliveryInformationProvider() );
+		self::$delivery_information_plugin->getProviderManager()->addProvider( self::PROVIDER_2_KEY, new DummyDeliveryInformationProvider() );
 	}
 
 	/**

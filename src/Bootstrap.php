@@ -13,6 +13,7 @@ use martinsluters\AsynchronousTemplateData\AjaxHandling\AjaxHandlerInterface;
 use martinsluters\AsynchronousTemplateData\Requests\RequestData;
 use martinsluters\AsynchronousTemplateData\Requests\RequestDataValidationAjaxStrategy;
 use martinsluters\AsynchronousTemplateData\Arguments\LookupArgumentFactory;
+use martinsluters\AsynchronousTemplateData\ProviderManagerTrait;
 use martinsluters\AsynchronousTemplateData\ContentController;
 use martinsluters\AsynchronousTemplateData\TemplateRenderer;
 use martinsluters\AsynchronousTemplateData\PluginDataTrait;
@@ -24,6 +25,7 @@ use martinsluters\AsynchronousTemplateData\Twig;
  */
 final class Bootstrap {
 
+	use ProviderManagerTrait;
 	use PluginDataTrait;
 
 	/**
@@ -81,13 +83,6 @@ final class Bootstrap {
 	 * @var StaticDependencies
 	 */
 	private StaticDependencies $static_dependencies;
-
-	/**
-	 * Data Provider Manager;
-	 *
-	 * @var ProviderManager
-	 */
-	public ProviderManager $provider_manager;
 
 	/**
 	 * Event subscribers collection.
@@ -173,39 +168,20 @@ final class Bootstrap {
 			$this->template_rendering_engine
 		);
 
-		$this->provider_manager = new ProviderManager();
+		$this->setProviderManager( new ProviderManager() );
 
 		$this->content_controller = new ContentController(
 			$this->template_renderer,
 			$this->getPluginData(),
 			$this->request_data,
 			new LookupArgumentFactory(),
-			$this->provider_manager
+			$this->getProviderManager()
 		);
 
 		$this->ajax_handler = new AjaxHandler( $this->getPluginData(), $this->content_controller );
 		$this->static_dependencies = new StaticDependencies( $this->getPluginData() );
 
 		$this->manageEventSubscribers();
-	}
-
-	/**
-	 * Getter of provider manager.
-	 *
-	 * @return \martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager
-	 * @throws \Exception Is thrown if getProviderManager is called before plugin is initialized.
-	 */
-	public function getProviderManager(): ProviderManager {
-		try {
-			/**
-			 * Return provider_manager property.
-			 *
-			 * @throws \Error if accessed before initialized
-			 */
-			return $this->provider_manager;
-		} catch ( \Error $th ) {
-			throw new \Exception( 'Provider manager can\'t be accessed before Bootstrap::init is called.' );
-		}
 	}
 
 	/**

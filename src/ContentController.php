@@ -7,6 +7,7 @@ use martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager;
 use martinsluters\AsynchronousTemplateData\Arguments\AbstractLookupArgument;
 use martinsluters\AsynchronousTemplateData\Arguments\LookupArgumentFactory;
 use martinsluters\AsynchronousTemplateData\Requests\RequestData;
+use martinsluters\AsynchronousTemplateData\ProviderManagerTrait;
 use martinsluters\AsynchronousTemplateData\TemplateRenderer;
 use martinsluters\AsynchronousTemplateData\RequestDataTrait;
 use martinsluters\AsynchronousTemplateData\PluginDataTrait;
@@ -19,6 +20,7 @@ class ContentController {
 
 	use PluginDataTrait;
 	use RequestDataTrait;
+	use ProviderManagerTrait;
 
 	/**
 	 * Instance of TemplateRenderer.
@@ -26,13 +28,6 @@ class ContentController {
 	 * @var \martinsluters\AsynchronousTemplateData\TemplateRenderer
 	 */
 	protected TemplateRenderer $template_renderer;
-
-	/**
-	 *  Instance of ProviderManager.
-	 *
-	 * @var \martinsluters\AsynchronousTemplateData\ProviderManagement\ProviderManager
-	 */
-	protected ProviderManager $provider_manager;
 
 	/**
 	 * Instance of LookupArgumentFactory.
@@ -59,7 +54,7 @@ class ContentController {
 	) {
 		$this->template_renderer = $template_renderer;
 		$this->lookup_argument_factory = $lookup_argument_factory;
-		$this->provider_manager = $provider_manager;
+		$this->setProviderManager( $provider_manager );
 		$this->setPluginData( $plugin_data );
 		$this->setRequestData( $request_data );
 	}
@@ -91,7 +86,7 @@ class ContentController {
 				$this->getRequestData()->getRequestBody()
 			);
 
-			return $this->provider_manager
+			return $this->getProviderManager()
 				->getProvider( $lookup_argument->provider_key )
 				->getData( $lookup_argument );
 

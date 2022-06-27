@@ -32,7 +32,7 @@ There can be created and registered as many data providers as needed. Here comes
  An example of how to register data providers:
 ```
 $plugin = martinsluters\AsynchronousTemplateData\Bootstrap::getInstance();
-$provider_manager = $plugin->provider_manager;
+$provider_manager = $plugin->getProviderManager();
 
 $provider_manager->addProvider( 'provider-unique-key-1', new DummyProviderOne() );
 $provider_manager->addProvider( 'provider-unique-key-2', new DummyProviderTwo() );
