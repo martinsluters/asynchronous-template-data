@@ -178,7 +178,7 @@ final class Bootstrap {
 			$this->getProviderManager()
 		);
 
-		$this->ajax_handler = new AjaxHandler( $this->getPluginData(), $this->content_controller );
+		$this->ajax_handler = new AjaxHandler( $this->getPluginData(), $this->getContentController() );
 		$this->static_dependencies = new StaticDependencies( $this->getPluginData() );
 
 		$this->manageEventSubscribers();
