@@ -199,7 +199,7 @@ final class Bootstrap {
 			 */
 			return $this->content_controller;
 		} catch ( \Error $th ) {
-			throw new \Exception( 'Content controller can\'t be accessed before Bootstrap::init is called.' );
+			throw new \Exception( 'Content controller can\'t be accessed before it is initialized.' );
 		}
 	}
 
