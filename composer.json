@@ -22,7 +22,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
         "phpcompatibility/php-compatibility": "^9.3",
         "wp-coding-standards/wpcs": "^2.3",
-        "roots/wordpress": "^6.0",
+        "roots/wordpress-full": "^6.0",
         "vlucas/phpdotenv": "^5.4",
         "lucatume/wp-browser": "^3.1",
         "codeception/module-asserts": "^1.0",
@@ -38,7 +38,8 @@
         "friendsofphp/php-cs-fixer": "^3.8",
         "szepeviktor/phpstan-wordpress": "^1.1",
         "phpstan/extension-installer": "^1.1",
-        "php-stubs/woocommerce-stubs": "^6.6"
+        "php-stubs/woocommerce-stubs": "^6.6",
+        "roots/wordpress-core-installer": "^1.100"
     },
     "autoload": {
         "psr-4": {
