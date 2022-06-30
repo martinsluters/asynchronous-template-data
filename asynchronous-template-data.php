@@ -8,6 +8,7 @@
  * Author URI:  https://github.com/martinsluters
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain: asynchronous-template-data
  *
  * @package     AsynchronousTemplateData
  * @author      Martins Luters

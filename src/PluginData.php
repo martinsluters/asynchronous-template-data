@@ -158,7 +158,7 @@ class PluginData {
 	public function getDataLoadingFailureMessage(): string {
 		return apply_filters(
 			$this->getKeyPrefix() . '_loading_information_failure_message',
-			_x( 'Failed to load data', 'loading data failure', $this->getPluginTextDomain() )
+			_x( 'Failed to load data', 'loading data failure', 'asynchronous-template-data' )
 		);
 	}
 
@@ -170,7 +170,7 @@ class PluginData {
 	public function getDataLoadingMessage(): string {
 		return apply_filters(
 			$this->getKeyPrefix() . '_loading_information_message',
-			_x( 'Loading data', 'loading data', $this->getPluginTextDomain() )
+			_x( 'Loading data', 'loading data', 'asynchronous-template-data' )
 		);
 	}
 
